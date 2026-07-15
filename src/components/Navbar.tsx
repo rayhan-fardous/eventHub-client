@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { LogOut } from 'lucide-react';
@@ -14,9 +15,9 @@ const guestLinks = [
 const userLinks = [
   { href: '/', label: 'Home' },
   { href: '/events', label: 'Events' },
-  { href: '/dashboard', label: 'Dashboard' },
   { href: '/events/create', label: 'Add Event' },
   { href: '/events/manage', label: 'Manage Events' },
+  { href: '/dashboard', label: 'Dashboard' },
   { href: '/profile', label: 'Profile' },
 ];
 
@@ -115,18 +116,23 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-brand-border bg-brand-bg/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+    <nav className="sticky top-4 z-50 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] md:w-[90%] lg:w-[80%] lg:max-w-[90rem] mx-auto rounded-2xl border border-brand-border bg-brand-bg/75 backdrop-blur-md shadow-xl shadow-brand-indigo-glow/5 overflow-hidden transition-all duration-300">
+      <div className="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link
           href="/"
           onClick={closeMenu}
-          className="flex items-center gap-2 text-xl font-extrabold tracking-wider bg-gradient-to-r from-brand-indigo via-brand-indigo to-brand-cyan bg-clip-text text-transparent transition-opacity hover:opacity-90"
+          className="flex items-center gap-2.5 transition-opacity hover:opacity-90"
         >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-cyan opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-cyan"></span>
+          <Image
+            src="/logo.png"
+            alt="EventHub Logo"
+            width={32}
+            height={32}
+            className="h-8 w-auto object-contain shrink-0"
+          />
+          <span className="text-xl font-extrabold tracking-wider bg-gradient-to-r from-brand-indigo via-brand-indigo to-brand-cyan bg-clip-text text-transparent">
+            EVENT<span className="text-brand-cyan">HUB</span>
           </span>
-          EVENT<span className="text-brand-cyan">HUB</span>
         </Link>
 
         {/* Menu Toggle Button */}

@@ -10,10 +10,11 @@ import FAQ from '@/components/home/FAQ';
 import Newsletter from '@/components/home/Newsletter';
 import CTA from '@/components/home/CTA';
 import Footer from '@/components/Footer';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function HomePage() {
   return (
-    <div className="relative min-h-screen flex flex-col justify-between bg-brand-bg text-brand-text-primary">
+    <div className="relative min-h-screen flex flex-col justify-between bg-brand-bg text-brand-text-primary overflow-x-hidden">
       {/* Background ambient glow layers */}
       <div className="absolute top-[-5%] left-[-5%] -z-10 h-[500px] w-[500px] rounded-full bg-brand-indigo-glow filter blur-[120px] animate-pulse-glow" />
       <div className="absolute bottom-[10%] right-[-5%] -z-10 h-[600px] w-[600px] rounded-full bg-brand-cyan-glow filter blur-[140px] opacity-60" />
@@ -21,15 +22,15 @@ export default function HomePage() {
       {/* Pages Container */}
       <main className="flex-grow">
         <Hero />
-        <UpcomingEvents />
-        <Categories />
-        <WhyChooseUs />
-        <Statistics />
-        <FeaturedEvents />
-        <Testimonials />
-        <FAQ />
-        <Newsletter />
-        <CTA />
+        <ScrollReveal><UpcomingEvents /></ScrollReveal>
+        <ScrollReveal><Categories /></ScrollReveal>
+        <ScrollReveal><WhyChooseUs /></ScrollReveal>
+        <ScrollReveal><Statistics /></ScrollReveal>
+        <ScrollReveal><FeaturedEvents /></ScrollReveal>
+        <ScrollReveal><Testimonials /></ScrollReveal>
+        <ScrollReveal><FAQ /></ScrollReveal>
+        <ScrollReveal><Newsletter /></ScrollReveal>
+        <ScrollReveal><CTA /></ScrollReveal>
       </main>
 
       <Footer />

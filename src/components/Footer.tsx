@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -13,9 +14,18 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Link
               href="/"
-              className="flex items-center gap-2 text-lg font-extrabold tracking-wider bg-gradient-to-r from-brand-indigo via-brand-indigo to-brand-cyan bg-clip-text text-transparent"
+              className="flex items-center gap-2.5 transition-opacity hover:opacity-90"
             >
-              EVENT<span className="text-brand-cyan">HUB</span>
+              <Image
+                src="/logo.png"
+                alt="EventHub Logo"
+                width={32}
+                height={32}
+                className="h-8 w-auto object-contain shrink-0"
+              />
+              <span className="text-lg font-extrabold tracking-wider bg-gradient-to-r from-brand-indigo via-brand-indigo to-brand-cyan bg-clip-text text-transparent">
+                EVENT<span className="text-brand-cyan">HUB</span>
+              </span>
             </Link>
             <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-brand-text-secondary leading-relaxed max-w-xs">
               Bangladesh&apos;s ultimate event hosting and management portal. Explore hackathons, UI workshops, conferences, and board sessions.

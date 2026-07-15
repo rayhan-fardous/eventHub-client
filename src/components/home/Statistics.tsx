@@ -18,13 +18,13 @@ export default function Statistics() {
             return (
               <div
                 key={index}
-                className="bg-brand-bg/40 border border-brand-border/60 p-5 sm:p-6 lg:p-8 rounded-[2rem] text-center hover:border-brand-cyan/20 transition-colors duration-300 relative group overflow-hidden"
+                className="bg-brand-bg/40 border border-brand-border/60 p-4 sm:p-6 lg:p-8 rounded-[2rem] text-center hover:border-brand-cyan/20 transition-colors duration-300 relative group overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-brand-indigo/5 to-brand-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 <div className="flex justify-center mb-3">
                   <Icon className={`size-5 sm:size-6 ${stat.color}`} />
                 </div>
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brand-text-primary tracking-tight">
+                <div className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-brand-text-primary tracking-tight">
                   {stat.value}
                 </div>
                 <div className="text-[10px] sm:text-xs font-semibold text-brand-text-secondary mt-1.5 sm:mt-2 uppercase tracking-wider">
