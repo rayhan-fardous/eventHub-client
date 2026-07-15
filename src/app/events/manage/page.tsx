@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Calendar, MapPin, Clock, Users, Plus, RefreshCw, Layers, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, Plus, RefreshCw, Layers, ArrowRight, ShieldCheck, Edit, Trash2 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { fetchEvents } from '@/lib/api';
+import { fetchEvents, deleteEvent } from '@/lib/api';
 import { Event } from '@/lib/mockEvents';
 import Footer from '@/components/Footer';
 
@@ -15,6 +15,29 @@ export default function ManageEventsPage() {
 
   const [createdEvents, setCreatedEvents] = useState<Event[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [confirmDeleteTitle, setConfirmDeleteTitle] = useState<string>('');
+
+  const handleDeleteClick = (id: string, title: string) => {
+    setConfirmDeleteId(id);
+    setConfirmDeleteTitle(title);
+  };
+
+  const handleConfirmDelete = async (id: string) => {
+    if (!user) return;
+    setConfirmDeleteId(null);
+    setDeletingId(id);
+    try {
+      await deleteEvent(id, user.email);
+      setCreatedEvents((prev) => prev.filter((event) => event.id !== id));
+    } catch (err: any) {
+      alert(err.message || "Failed to delete event");
+    } finally {
+      setDeletingId(null);
+      setConfirmDeleteTitle('');
+    }
+  };
 
   // Redirect if not logged in
   useEffect(() => {
@@ -179,14 +202,33 @@ export default function ManageEventsPage() {
                       </div>
 
                       {/* Footer Action */}
-                      <div className="pt-4 border-t border-brand-border/60 flex items-center justify-end mt-4">
+                      <div className="pt-4 border-t border-brand-border/60 flex items-center justify-between mt-4">
                         <Link
                           href={`/events/${event.id}`}
-                          className="inline-flex items-center gap-1 text-xs font-bold text-brand-cyan hover:text-brand-cyan-hover transition-colors"
+                          className="inline-flex items-center gap-1 text-xs font-bold text-brand-text-secondary hover:text-brand-cyan transition-colors"
                         >
-                          View Event Listing
+                          View Listing
                           <ArrowRight className="size-3" />
                         </Link>
+                        
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/events/edit/${event.id}`}
+                            className="inline-flex items-center gap-1 text-[11px] font-bold text-brand-cyan hover:text-brand-cyan-hover hover:scale-105 active:scale-[0.95] transition-all bg-brand-cyan-glow/5 border border-brand-cyan/20 px-2.5 py-1 rounded-lg"
+                          >
+                            <Edit className="size-3" />
+                            Edit
+                          </Link>
+                          
+                          <button
+                            onClick={() => handleDeleteClick(event.id, event.title)}
+                            disabled={deletingId === event.id}
+                            className="inline-flex items-center gap-1 text-[11px] font-bold text-red-400 hover:text-red-300 hover:scale-105 active:scale-[0.95] transition-all bg-red-500/5 border border-red-500/20 px-2.5 py-1 rounded-lg cursor-pointer disabled:opacity-50"
+                          >
+                            <Trash2 className="size-3" />
+                            {deletingId === event.id ? '...' : 'Delete'}
+                          </button>
+                        </div>
                       </div>
 
                     </div>
@@ -198,6 +240,38 @@ export default function ManageEventsPage() {
         </section>
 
       </main>
+
+      {/* Confirm Delete Modal */}
+      {confirmDeleteId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brand-bg/85 backdrop-blur-sm">
+          <div className="w-full max-w-md bg-brand-panel border border-brand-border rounded-[2rem] p-6 shadow-2xl space-y-6 text-left relative z-50">
+            <h3 className="text-lg font-bold text-brand-text-primary flex items-center gap-2">
+              <Trash2 className="size-5 text-red-400" />
+              Confirm Deletion
+            </h3>
+            <p className="text-xs sm:text-sm text-brand-text-secondary leading-relaxed">
+              Are you sure you want to permanently delete <span className="font-bold text-brand-text-primary">&ldquo;{confirmDeleteTitle}&rdquo;</span>? This will also remove all attendee tickets and bookings. This cannot be undone.
+            </p>
+            <div className="flex gap-3 justify-end pt-2">
+              <button
+                onClick={() => {
+                  setConfirmDeleteId(null);
+                  setConfirmDeleteTitle('');
+                }}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-brand-text-secondary hover:text-brand-text-primary border border-brand-border bg-white/5 hover:bg-white/10 active:scale-[0.97] transition-all cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleConfirmDelete(confirmDeleteId)}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-brand-bg bg-red-500 hover:bg-red-400 active:scale-[0.97] transition-all cursor-pointer shadow-lg shadow-red-500/10"
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

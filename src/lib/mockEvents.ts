@@ -29,6 +29,7 @@ export interface Event {
     activity: string;
   }[];
   reviews: Review[];
+  creatorEmail?: string;
 }
 
 export const mockEvents: Event[] = [

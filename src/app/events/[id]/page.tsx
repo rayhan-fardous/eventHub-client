@@ -378,7 +378,27 @@ export default function EventDetailsPage() {
               {/* Write Review Form */}
               <div className="p-6 rounded-[2rem] border border-brand-border bg-brand-panel/40">
                 <h3 className="text-base sm:text-lg font-bold mb-4">Share Your Experience</h3>
-                {reviewSubmitted ? (
+                {!user ? (
+                  <div className="p-5 rounded-xl border border-brand-border bg-white/5 text-center space-y-3">
+                    <p className="text-sm text-brand-text-secondary">
+                      You must be logged in to post a review.
+                    </p>
+                    <div className="flex gap-4 justify-center">
+                      <Link
+                        href="/login"
+                        className="px-4 py-2 rounded-xl text-xs font-bold text-brand-bg bg-brand-cyan hover:brightness-110 active:scale-[0.97] transition-all cursor-pointer"
+                      >
+                        Log In
+                      </Link>
+                      <Link
+                        href="/signup"
+                        className="px-4 py-2 rounded-xl text-xs font-bold text-brand-text-primary border border-brand-border hover:bg-white/5 active:scale-[0.97] transition-all cursor-pointer"
+                      >
+                        Sign Up
+                      </Link>
+                    </div>
+                  </div>
+                ) : reviewSubmitted ? (
                   <div className="p-4 rounded-xl border border-green-500/20 bg-green-500/10 text-sm font-semibold text-green-400">
                     🎉 Thank you! Your review has been added live.
                   </div>
@@ -512,6 +532,18 @@ export default function EventDetailsPage() {
                   </button>
                   <p className="text-[10px] text-center text-green-400/90 font-semibold bg-green-500/5 py-2 px-3 rounded-lg border border-green-500/10">
                     Registration Ticket is sent to your account email!
+                  </p>
+                </div>
+                            ) : !user ? (
+                <div className="space-y-3">
+                  <button
+                    disabled
+                    className="w-full py-4 rounded-xl font-bold bg-brand-border text-brand-text-muted border border-brand-border cursor-not-allowed text-center text-sm"
+                  >
+                    Login to Book
+                  </button>
+                  <p className="text-[10px] text-center text-brand-text-secondary font-semibold bg-white/5 py-2 px-3 rounded-lg border border-white/5">
+                    Please <Link href="/login" className="text-brand-cyan hover:underline font-bold">Log In</Link> or <Link href="/signup" className="text-brand-cyan hover:underline font-bold">Sign Up</Link> to book this event.
                   </p>
                 </div>
               ) : (
