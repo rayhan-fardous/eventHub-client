@@ -113,8 +113,8 @@ function EventsContent() {
 
       <main className="flex-grow">
         {/* Page Header */}
-        <section className="mx-auto max-w-7xl px-4 pt-12 pb-8 sm:px-6 lg:px-8 text-left">
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-brand-text-primary">
+        <section className="mx-auto max-w-7xl px-4 pt-10 sm:pt-12 pb-6 sm:pb-8 sm:px-6 lg:px-8 text-left">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight md:text-4xl text-brand-text-primary">
             Explore Events
           </h1>
           <p className="mt-2 text-sm sm:text-base text-brand-text-secondary">
@@ -123,9 +123,9 @@ function EventsContent() {
         </section>
 
         {/* Filter Controls Bar */}
-        <section className="mx-auto max-w-7xl px-4 mb-8 sm:px-6 lg:px-8">
-          <div className="p-5 rounded-[2rem] bg-brand-panel/60 border border-brand-border backdrop-blur-sm">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <section className="mx-auto max-w-7xl px-4 mb-6 sm:mb-8 sm:px-6 lg:px-8">
+          <div className="p-4 sm:p-5 rounded-[1.5rem] sm:rounded-[2rem] bg-brand-panel/60 border border-brand-border backdrop-blur-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
               
               {/* Search Field */}
               <div className="relative">
@@ -211,7 +211,7 @@ function EventsContent() {
           ) : (
             <>
               {/* Event Cards Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 sm:gap-6 lg:gap-8">
                 {loading
                   ? Array.from({ length: 4 }).map((_, i) => <EventSkeleton key={i} />)
                   : paginatedEvents.map((event) => (

@@ -27,25 +27,25 @@ export default function FeaturedEvents() {
   }, []);
 
   return (
-    <section className="py-20 bg-brand-bg relative">
+    <section className="py-14 sm:py-20 bg-brand-bg relative">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-brand-cyan bg-brand-cyan-glow/10 border border-brand-cyan/20 uppercase tracking-wider mb-3">
             <Award className="size-3.5" />
             Curated Highlights
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-brand-text-primary sm:text-4xl">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-brand-text-primary md:text-4xl">
             Featured Events
           </h2>
-          <p className="mt-4 text-brand-text-secondary text-base sm:text-lg">
+          <p className="mt-3 sm:mt-4 text-brand-text-secondary text-sm sm:text-base lg:text-lg">
             Hand-picked, highly-rated gatherings with exceptional speaker ratings and workshop materials.
           </p>
         </div>
 
-        {/* Featured Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Featured Events Grid — 1 col mobile, 2 col sm, 3 col lg */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
           {loading
             ? Array.from({ length: 3 }).map((_, i) => <EventSkeleton key={i} />)
             : featured.map((event) => <EventCard key={event.id} event={event} />)}

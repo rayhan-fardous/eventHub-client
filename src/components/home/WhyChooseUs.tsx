@@ -26,38 +26,38 @@ const reasons = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-20 bg-brand-bg relative">
+    <section className="py-14 sm:py-20 bg-brand-bg relative">
       {/* Glow background */}
       <div className="absolute bottom-10 left-10 -z-10 h-72 w-72 rounded-full bg-brand-cyan-glow/5 filter blur-[80px]" />
       
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
           <span className="text-xs font-semibold tracking-wider text-brand-cyan bg-brand-cyan-glow/10 border border-brand-cyan/20 px-3 py-1 rounded-full uppercase">
             Value Proposition
           </span>
-          <h2 className="text-3xl font-extrabold tracking-tight text-brand-text-primary sm:text-4xl mt-3">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-brand-text-primary md:text-4xl mt-3">
             Why Choose EventHub?
           </h2>
-          <p className="mt-4 text-brand-text-secondary text-base sm:text-lg">
+          <p className="mt-3 sm:mt-4 text-brand-text-secondary text-sm sm:text-base lg:text-lg">
             We bridge the gap between world-class organizers and active knowledge-seekers through a highly optimized dashboard.
           </p>
         </div>
 
-        {/* Reasons Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Reasons Grid — 1 col mobile, 2 col sm, 4 col lg */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-8">
           {reasons.map((reason, index) => {
             const Icon = reason.icon;
             return (
               <div
                 key={index}
-                className="glass-panel glass-panel-hover p-8 rounded-[2rem] flex flex-col gap-4 text-left transition-all duration-300"
+                className="glass-panel glass-panel-hover p-6 sm:p-8 rounded-[2rem] flex flex-col gap-4 text-left transition-all duration-300"
               >
-                <div className="size-12 rounded-2xl bg-gradient-to-br from-brand-indigo/10 to-brand-cyan/10 border border-brand-border flex items-center justify-center text-brand-cyan">
-                  <Icon className="size-6 text-brand-cyan" />
+                <div className="size-11 sm:size-12 rounded-2xl bg-gradient-to-br from-brand-indigo/10 to-brand-cyan/10 border border-brand-border flex items-center justify-center text-brand-cyan shrink-0">
+                  <Icon className="size-5 sm:size-6 text-brand-cyan" />
                 </div>
-                <h3 className="text-lg font-bold text-brand-text-primary mt-2">
+                <h3 className="text-base sm:text-lg font-bold text-brand-text-primary mt-1">
                   {reason.title}
                 </h3>
                 <p className="text-sm text-brand-text-secondary leading-relaxed">

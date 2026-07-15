@@ -203,11 +203,11 @@ export default function EventDetailsPage() {
           Back to all events
         </Link>
 
-        {/* Content Layout Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* Content Layout Grid — stacked on mobile, side-by-side on lg */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
           
           {/* Left Column: Image Slider, Overview, Specs, Reviews */}
-          <div className="lg:col-span-2 space-y-12">
+          <div className="lg:col-span-2 space-y-10 lg:space-y-12">
             
             {/* Title Block Header (mobile optimized) */}
             <div className="space-y-4">
@@ -240,13 +240,13 @@ export default function EventDetailsPage() {
                 <>
                   <button
                     onClick={handlePrevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 size-10 rounded-full border border-white/10 bg-brand-bg/60 text-brand-text-primary hover:bg-brand-cyan hover:text-brand-bg backdrop-blur opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center cursor-pointer"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 size-10 rounded-full border border-white/10 bg-brand-bg/60 text-brand-text-primary hover:bg-brand-cyan hover:text-brand-bg backdrop-blur opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 flex items-center justify-center cursor-pointer z-10"
                   >
                     <ChevronLeft className="size-5" />
                   </button>
                   <button
                     onClick={handleNextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 size-10 rounded-full border border-white/10 bg-brand-bg/60 text-brand-text-primary hover:bg-brand-cyan hover:text-brand-bg backdrop-blur opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center cursor-pointer"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 size-10 rounded-full border border-white/10 bg-brand-bg/60 text-brand-text-primary hover:bg-brand-cyan hover:text-brand-bg backdrop-blur opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 flex items-center justify-center cursor-pointer z-10"
                   >
                     <ChevronRight className="size-5" />
                   </button>
@@ -256,12 +256,12 @@ export default function EventDetailsPage() {
 
             {/* Thumbnails Row */}
             {currentEvent.images.length > 1 && (
-              <div className="flex gap-3 justify-center">
+              <div className="flex gap-2 sm:gap-3 justify-center flex-wrap">
                 {currentEvent.images.map((img, index) => (
                   <button
                     key={index}
                     onClick={() => setActiveImage(index)}
-                    className={`aspect-video w-20 rounded-xl overflow-hidden border transition-all cursor-pointer relative ${
+                    className={`aspect-video w-16 sm:w-20 rounded-xl overflow-hidden border transition-all cursor-pointer relative ${
                       index === activeImage ? 'border-brand-cyan ring-2 ring-brand-cyan/20 scale-[1.02]' : 'border-brand-border opacity-60 hover:opacity-100'
                     }`}
                   >
@@ -461,8 +461,8 @@ export default function EventDetailsPage() {
           </div>
 
           {/* Right Column: Sticky Sidebar Reservation Card */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 bg-brand-panel/90 border border-brand-border p-6 rounded-[2.5rem] shadow-2xl space-y-6 text-left backdrop-blur-md">
+          <div className="lg:col-span-1 order-first lg:order-last">
+            <div className="lg:sticky lg:top-24 bg-brand-panel/90 border border-brand-border p-5 sm:p-6 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl space-y-5 sm:space-y-6 text-left backdrop-blur-md">
               <div className="flex justify-between items-center">
                 <span className="text-sm font-semibold text-brand-text-secondary">Registration Fee</span>
                 <span className="text-2xl font-black text-brand-cyan">
@@ -546,7 +546,7 @@ export default function EventDetailsPage() {
               </h2>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
               {relatedEvents.map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}

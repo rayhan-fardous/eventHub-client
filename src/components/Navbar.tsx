@@ -90,24 +90,24 @@ export default function Navbar() {
   const mobileAuthLinks = loading ? null : user ? (
     <button
       onClick={handleLogout}
-      className="flex items-center gap-2 w-full text-left text-sm font-medium text-brand-text-secondary hover:text-red-400 py-2 px-3 rounded-lg hover:bg-red-500/10 transition-colors cursor-pointer"
+      className="flex items-center gap-2 w-full text-left text-sm font-medium text-brand-text-secondary hover:text-red-400 py-3 px-4 rounded-xl hover:bg-red-500/10 transition-colors cursor-pointer"
     >
       <LogOut className="size-4" />
       Logout
     </button>
   ) : (
-    <div className="flex flex-col gap-2.5 px-1">
+    <div className="flex flex-col gap-3 px-1">
       <Link
         href="/login"
         onClick={closeMenu}
-        className="text-center text-sm font-medium text-brand-text-secondary hover:text-brand-text-primary py-2 px-3 rounded-lg hover:bg-white/5 transition-colors"
+        className="text-center text-sm font-medium text-brand-text-secondary hover:text-brand-text-primary py-3 px-4 rounded-xl hover:bg-white/5 transition-colors"
       >
         Login
       </Link>
       <Link
         href="/signup"
         onClick={closeMenu}
-        className="text-center text-sm font-semibold text-brand-bg bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 py-2.5 px-4 rounded-xl shadow-md transition-colors"
+        className="text-center text-sm font-semibold text-brand-bg bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 py-3 px-4 rounded-xl shadow-md transition-colors"
       >
         Register
       </Link>
@@ -132,7 +132,7 @@ export default function Navbar() {
         {/* Menu Toggle Button */}
         <button
           onClick={() => setMenuOpen((prev) => !prev)}
-          className="flex flex-col justify-center items-center gap-1.5 p-2 rounded-lg hover:bg-white/5 transition-colors sm:hidden cursor-pointer"
+          className="flex flex-col justify-center items-center gap-1.5 p-2 rounded-lg hover:bg-white/5 transition-colors md:hidden cursor-pointer"
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
         >
@@ -154,7 +154,7 @@ export default function Navbar() {
         </button>
 
         {/* Desktop Links */}
-        <div className="hidden sm:flex sm:items-center sm:gap-6">
+        <div className="hidden md:flex md:items-center md:gap-6">
           <div className="flex items-center gap-2">
             {visibleNavLinks.map(({ href, label }) => (
               <NavLink key={href} href={href} label={label} />
@@ -169,18 +169,20 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {menuOpen && (
-        <div className="border-t border-brand-border bg-brand-bg px-4 pb-6 pt-3 sm:hidden animate-in fade-in slide-in-from-top duration-300">
+        <div className="border-t border-brand-border bg-brand-bg px-4 pb-8 pt-6 md:hidden animate-in fade-in slide-in-from-top duration-300">
           <div className="flex flex-col gap-2">
             {visibleNavLinks.map(({ href, label }) => (
-              <NavLink
+              <Link
                 key={href}
                 href={href}
-                label={label}
                 onClick={closeMenu}
-              />
+                className="block w-full py-3 px-4 text-brand-text-secondary hover:text-brand-text-primary hover:bg-white/5 rounded-xl transition-colors font-medium"
+              >
+                {label}
+              </Link>
             ))}
 
-            <div className="mt-4 border-t border-brand-border pt-4">
+            <div className="mt-6 border-t border-brand-border pt-6">
               {mobileAuthLinks}
             </div>
           </div>

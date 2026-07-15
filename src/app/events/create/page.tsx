@@ -132,12 +132,12 @@ export default function CreateEventPage() {
 
       <main className="flex-grow mx-auto max-w-4xl w-full px-4 pt-12 pb-20 sm:px-6 lg:px-8">
         {/* Page Header */}
-        <section className="text-center max-w-2xl mx-auto mb-12">
+        <section className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-brand-cyan bg-brand-cyan-glow/10 border border-brand-cyan/20 uppercase tracking-wider mb-3">
             <Plus className="size-3.5" />
             Host Event
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-brand-text-primary">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-brand-text-primary">
             Create A New Event
           </h1>
           <p className="mt-2 text-sm sm:text-base text-brand-text-secondary">
@@ -146,7 +146,7 @@ export default function CreateEventPage() {
         </section>
 
         {/* Form Card */}
-        <section className="bg-brand-panel/60 border border-brand-border rounded-[2.5rem] p-6 sm:p-10 backdrop-blur-md shadow-2xl relative overflow-hidden">
+        <section className="bg-brand-panel/60 border border-brand-border rounded-[2rem] sm:rounded-[2.5rem] p-5 sm:p-8 lg:p-10 backdrop-blur-md shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 p-6 opacity-5 select-none pointer-events-none text-brand-cyan font-black text-9xl">
             NEW
           </div>
@@ -395,14 +395,14 @@ export default function CreateEventPage() {
                   </p>
                 ) : (
                   schedule.map((item, index) => (
-                    <div key={index} className="flex gap-3 items-center">
+                    <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center">
                       <input
                         type="text"
                         required
                         value={item.time}
                         onChange={(e) => handleScheduleChange(index, 'time', e.target.value)}
                         placeholder="Time (e.g. 09:00 AM)"
-                        className="w-1/3 px-3 py-2 bg-brand-bg/50 border border-brand-border hover:border-brand-text-muted focus:border-brand-cyan/60 rounded-xl text-brand-text-primary placeholder:text-brand-text-muted focus:outline-none text-xs"
+                        className="w-full sm:w-1/3 px-3 py-2 bg-brand-bg/50 border border-brand-border hover:border-brand-text-muted focus:border-brand-cyan/60 rounded-xl text-brand-text-primary placeholder:text-brand-text-muted focus:outline-none text-xs"
                       />
                       <input
                         type="text"
@@ -410,12 +410,12 @@ export default function CreateEventPage() {
                         value={item.activity}
                         onChange={(e) => handleScheduleChange(index, 'activity', e.target.value)}
                         placeholder="Activity Description (e.g. Keynote Speech)"
-                        className="flex-grow px-3 py-2 bg-brand-bg/50 border border-brand-border hover:border-brand-text-muted focus:border-brand-cyan/60 rounded-xl text-brand-text-primary placeholder:text-brand-text-muted focus:outline-none text-xs"
+                        className="w-full sm:flex-grow px-3 py-2 bg-brand-bg/50 border border-brand-border hover:border-brand-text-muted focus:border-brand-cyan/60 rounded-xl text-brand-text-primary placeholder:text-brand-text-muted focus:outline-none text-xs"
                       />
                       <button
                         type="button"
                         onClick={() => handleRemoveScheduleItem(index)}
-                        className="p-2.5 rounded-xl border border-transparent hover:border-red-500/20 text-brand-text-muted hover:text-red-400 hover:bg-red-500/10 transition-all cursor-pointer shrink-0"
+                        className="p-2.5 rounded-xl border border-transparent hover:border-red-500/20 text-brand-text-muted hover:text-red-400 hover:bg-red-500/10 transition-all cursor-pointer shrink-0 self-start sm:self-auto"
                         title="Remove agenda item"
                       >
                         <Trash2 className="size-4" />

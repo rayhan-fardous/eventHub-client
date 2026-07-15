@@ -48,6 +48,14 @@ html, body {
   color: #f8fafc;
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   scroll-behavior: smooth;
+  /* Prevent horizontal scroll on small screens */
+  overflow-x: hidden;
+}
+
+/* Prevent child elements from causing overflow */
+* {
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 /* Glassmorphism utility */
@@ -88,4 +96,17 @@ html, body {
 
 .animate-pulse-glow {
   animation: pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Ensure minimum touch target size on mobile */
+@media (max-width: 640px) {
+  button, a[role="button"], [role="button"] {
+    min-height: 36px;
+  }
+  
+  /* Better image handling on small screens */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }

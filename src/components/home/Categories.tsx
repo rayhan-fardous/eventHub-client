@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Cpu, Briefcase, Wrench, Mic, GraduationCap, Code, ArrowRight } from 'lucide-react';
+import { Cpu, Briefcase, Wrench, Mic, GraduationCap, Code } from 'lucide-react';
 
 const categoriesList = [
   { name: 'Technology', icon: Cpu, count: '3 Events', color: 'from-blue-500/10 to-brand-cyan/10 border-blue-500/20 text-blue-400' },
@@ -15,34 +15,34 @@ const categoriesList = [
 
 export default function Categories() {
   return (
-    <section className="py-20 bg-brand-panel/10 border-y border-brand-border/60 relative">
+    <section className="py-14 sm:py-20 bg-brand-panel/10 border-y border-brand-border/60 relative">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl font-extrabold tracking-tight text-brand-text-primary sm:text-4xl">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-brand-text-primary md:text-4xl">
             Browse By Category
           </h2>
-          <p className="mt-4 text-brand-text-secondary text-base sm:text-lg">
+          <p className="mt-3 sm:mt-4 text-brand-text-secondary text-sm sm:text-base lg:text-lg">
             Find workshops, hackathons, and seminars tailored specifically to your interests and skills.
           </p>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        {/* Categories Grid — 2 cols on mobile, 3 on sm, 6 on xl */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-6">
           {categoriesList.map((category) => {
             const Icon = category.icon;
             return (
               <Link
                 key={category.name}
                 href={`/events?category=${category.name}`}
-                className={`group relative p-6 rounded-[2rem] border bg-gradient-to-b ${category.color} hover:brightness-110 active:scale-[0.97] transition-all duration-300 flex flex-col items-center justify-between text-center min-h-[170px] shadow-sm hover:shadow-lg`}
+                className={`group relative p-4 sm:p-6 rounded-[2rem] border bg-gradient-to-b ${category.color} hover:brightness-110 active:scale-[0.97] transition-all duration-300 flex flex-col items-center justify-between text-center min-h-[140px] sm:min-h-[170px] shadow-sm hover:shadow-lg`}
               >
-                <div className="p-4 rounded-2xl bg-brand-bg/60 border border-white/5 text-brand-text-primary group-hover:scale-105 transition-transform duration-300">
-                  <Icon className="size-6 text-brand-cyan" />
+                <div className="p-3 sm:p-4 rounded-2xl bg-brand-bg/60 border border-white/5 text-brand-text-primary group-hover:scale-105 transition-transform duration-300">
+                  <Icon className="size-5 sm:size-6 text-brand-cyan" />
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold text-brand-text-primary mt-4 tracking-tight">
+                  <h3 className="text-xs sm:text-sm md:text-base font-bold text-brand-text-primary mt-3 sm:mt-4 tracking-tight">
                     {category.name}
                   </h3>
                   <span className="text-[10px] sm:text-xs text-brand-text-secondary block mt-1">

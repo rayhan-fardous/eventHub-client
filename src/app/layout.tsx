@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
@@ -14,9 +14,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
-  title: "EventHub",
-  description: "Event Management Platform",
+  title: "EventHub – Discover & Host Events in Bangladesh",
+  description: "Bangladesh's premier event hosting and management platform. Explore hackathons, workshops, conferences, seminars and more.",
 };
 
 export default function RootLayout({

@@ -61,23 +61,23 @@ export default function ManageEventsPage() {
       <main className="flex-grow mx-auto max-w-7xl w-full px-4 pt-12 pb-20 sm:px-6 lg:px-8">
         
         {/* Manage Header */}
-        <section className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 border-b border-brand-border/60 pb-8">
+        <section className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 sm:gap-6 mb-10 sm:mb-12 border-b border-brand-border/60 pb-6 sm:pb-8">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-brand-cyan bg-brand-cyan-glow/10 border border-brand-cyan/20 uppercase tracking-wider mb-3">
               <ShieldCheck className="size-3.5" />
               Organizer Console
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-brand-text-primary">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-brand-text-primary">
               Manage Your Hosted Events
             </h1>
             <p className="mt-2 text-sm sm:text-base text-brand-text-secondary">
               Review and monitor your published events, check attendee reservations, and add agenda updates.
             </p>
           </div>
-          <div>
+          <div className="shrink-0">
             <Link
               href="/events/create"
-              className="px-5 py-2.5 rounded-xl font-bold bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 active:scale-[0.98] transition-all duration-200 text-brand-bg text-xs shadow-lg shadow-brand-indigo-glow/20 flex items-center gap-1.5"
+              className="px-4 sm:px-5 py-2.5 rounded-xl font-bold bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 active:scale-[0.98] transition-all duration-200 text-brand-bg text-xs shadow-lg shadow-brand-indigo-glow/20 flex items-center gap-1.5"
             >
               <Plus className="size-4" />
               Create Event
@@ -112,7 +112,7 @@ export default function ManageEventsPage() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
               {createdEvents.map((event) => {
                 const totalSeats = event.seats.total;
                 const bookedSeats = event.seats.booked;

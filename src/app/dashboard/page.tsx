@@ -65,23 +65,23 @@ export default function DashboardPage() {
       <main className="flex-grow mx-auto max-w-7xl w-full px-4 pt-12 pb-20 sm:px-6 lg:px-8">
         
         {/* Dashboard Header */}
-        <section className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 border-b border-brand-border/60 pb-8">
+        <section className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 sm:gap-6 mb-10 sm:mb-12 border-b border-brand-border/60 pb-6 sm:pb-8">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-brand-cyan bg-brand-cyan-glow/10 border border-brand-cyan/20 uppercase tracking-wider mb-3">
               <User className="size-3.5" />
               Member Space
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-brand-text-primary">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-brand-text-primary">
               Welcome, {user.name}
             </h1>
             <p className="mt-2 text-sm sm:text-base text-brand-text-secondary">
               Track your registered event RSVPs, tickets, and bookings history in one unified panel.
             </p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 shrink-0">
             <Link
               href="/events"
-              className="px-5 py-2.5 rounded-xl font-bold bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 active:scale-[0.98] transition-all duration-200 text-brand-bg text-xs shadow-lg shadow-brand-indigo-glow/20 flex items-center gap-1.5"
+              className="px-4 sm:px-5 py-2.5 rounded-xl font-bold bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 active:scale-[0.98] transition-all duration-200 text-brand-bg text-xs shadow-lg shadow-brand-indigo-glow/20 flex items-center gap-1.5"
             >
               Browse Events
               <ArrowRight className="size-4" />
@@ -90,28 +90,28 @@ export default function DashboardPage() {
         </section>
 
         {/* Stats Grid Cards */}
-        <section className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+        <section className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
           {/* Card 1 */}
-          <div className="bg-brand-panel/40 border border-brand-border p-6 rounded-2xl flex flex-col justify-between">
+          <div className="bg-brand-panel/40 border border-brand-border p-5 sm:p-6 rounded-2xl flex flex-col justify-between">
             <span className="text-xs font-bold text-brand-text-muted uppercase tracking-wider block">Booked RSVPs</span>
-            <div className="mt-4 flex items-baseline gap-2">
-              <span className="text-4xl font-black text-brand-text-primary">{totalBooked}</span>
+            <div className="mt-3 sm:mt-4 flex items-baseline gap-2">
+              <span className="text-3xl sm:text-4xl font-black text-brand-text-primary">{totalBooked}</span>
               <span className="text-xs text-brand-text-secondary">Registered Events</span>
             </div>
           </div>
           {/* Card 2 */}
-          <div className="bg-brand-panel/40 border border-brand-border p-6 rounded-2xl flex flex-col justify-between">
+          <div className="bg-brand-panel/40 border border-brand-border p-5 sm:p-6 rounded-2xl flex flex-col justify-between">
             <span className="text-xs font-bold text-brand-text-muted uppercase tracking-wider block">Total Expenditure</span>
-            <div className="mt-4 flex items-baseline gap-2">
-              <span className="text-4xl font-black text-brand-cyan">৳{totalCost.toLocaleString()}</span>
+            <div className="mt-3 sm:mt-4 flex items-baseline gap-2">
+              <span className="text-3xl sm:text-4xl font-black text-brand-cyan">৳{totalCost.toLocaleString()}</span>
               <span className="text-xs text-brand-text-secondary">BDT Paid</span>
             </div>
           </div>
           {/* Card 3 */}
-          <div className="bg-brand-panel/40 border border-brand-border p-6 rounded-2xl flex flex-col justify-between">
+          <div className="bg-brand-panel/40 border border-brand-border p-5 sm:p-6 rounded-2xl flex flex-col justify-between">
             <span className="text-xs font-bold text-brand-text-muted uppercase tracking-wider block">Free Access RSVPs</span>
-            <div className="mt-4 flex items-baseline gap-2">
-              <span className="text-4xl font-black text-brand-text-primary">{freeEventsCount}</span>
+            <div className="mt-3 sm:mt-4 flex items-baseline gap-2">
+              <span className="text-3xl sm:text-4xl font-black text-brand-text-primary">{freeEventsCount}</span>
               <span className="text-xs text-brand-text-secondary">Complimentary Passes</span>
             </div>
           </div>
@@ -144,7 +144,7 @@ export default function DashboardPage() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
               {bookings.map((booking) => {
                 const isFree = booking.eventPrice === 0;
                 return (

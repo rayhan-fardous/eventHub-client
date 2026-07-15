@@ -16,7 +16,7 @@ export default function Newsletter() {
   };
 
   return (
-    <section className="py-20 bg-brand-panel/10 border-t border-brand-border/60 relative overflow-hidden">
+    <section className="py-14 sm:py-20 bg-brand-panel/10 border-t border-brand-border/60 relative overflow-hidden">
       {/* Ambient glow circle */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-72 w-72 rounded-full bg-brand-cyan-glow/5 filter blur-[80px]" />
       
@@ -25,14 +25,14 @@ export default function Newsletter() {
           <Sparkles className="size-3.5" />
           Stay Loop
         </div>
-        <h2 className="text-3xl font-extrabold tracking-tight text-brand-text-primary sm:text-4xl">
+        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-brand-text-primary md:text-4xl">
           Subscribe to Our Newsletter
         </h2>
-        <p className="mt-4 text-brand-text-secondary text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+        <p className="mt-3 sm:mt-4 text-brand-text-secondary text-sm sm:text-base lg:text-lg max-w-xl mx-auto leading-relaxed">
           Get weekly updates on popular conferences, seminars, and hackathons hosted around Bangladesh. No spam, unsubscribe anytime.
         </p>
 
-        <div className="mt-8 max-w-md mx-auto">
+        <div className="mt-6 sm:mt-8 max-w-md mx-auto w-full">
           {subscribed ? (
             <div className="p-4 rounded-xl border border-green-500/20 bg-green-500/10 text-sm font-semibold text-green-400">
               ✨ Subscription successful! Check your inbox for confirmation.
@@ -47,12 +47,12 @@ export default function Newsletter() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full pl-11 pr-4 py-3.5 bg-brand-bg border border-brand-border hover:border-brand-text-muted focus:border-brand-cyan/60 rounded-xl text-brand-text-primary placeholder:text-brand-text-muted focus:outline-none focus:ring-2 focus:ring-brand-cyan-glow/20 transition-all text-sm"
+                  className="w-full pl-11 pr-4 py-3 sm:py-3.5 bg-brand-bg border border-brand-border hover:border-brand-text-muted focus:border-brand-cyan/60 rounded-xl text-brand-text-primary placeholder:text-brand-text-muted focus:outline-none focus:ring-2 focus:ring-brand-cyan-glow/20 transition-all text-sm"
                 />
               </div>
               <button
                 type="submit"
-                className="px-6 py-3.5 rounded-xl font-bold bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 active:scale-[0.98] transition-all duration-200 text-brand-bg shadow-lg shadow-brand-indigo-glow/20 flex items-center justify-center gap-1.5 cursor-pointer shrink-0"
+                className="px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 active:scale-[0.98] transition-all duration-200 text-brand-bg shadow-lg shadow-brand-indigo-glow/20 flex items-center justify-center gap-1.5 cursor-pointer shrink-0 text-sm"
               >
                 Subscribe
                 <Send className="size-3.5" />
