@@ -21,6 +21,8 @@ import {
   LogOut,
   ArrowRight,
   Sparkles,
+  Edit2,
+  X,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { authClient } from "@/lib/auth-client";
@@ -130,6 +132,7 @@ export default function ProfilePage() {
   const [totalSpent, setTotalSpent] = useState(0);
 
   // Profile form feedback
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [profileStatus, setProfileStatus] = useState<{ type: "success" | "error"; msg: string } | null>(null);
   const [profileSaving, setProfileSaving] = useState(false);
 
@@ -197,6 +200,7 @@ export default function ProfilePage() {
     try {
       await updateUser(data.name);
       setProfileStatus({ type: "success", msg: "Display name updated successfully!" });
+      setIsEditingProfile(false);
     } catch (err: any) {
       setProfileStatus({ type: "error", msg: err?.message || "Failed to update profile." });
     } finally {
@@ -347,10 +351,13 @@ export default function ProfilePage() {
                     <input
                       {...profileForm.register("name")}
                       type="text"
-                      className={`w-full pl-11 pr-4 py-3 bg-brand-bg/50 border rounded-xl text-brand-text-primary placeholder:text-brand-text-muted focus:outline-none focus:ring-2 transition-all text-sm ${
-                        profileForm.formState.errors.name
-                          ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/20"
-                          : "border-brand-border hover:border-brand-text-muted focus:border-brand-cyan/60 focus:ring-brand-cyan-glow/20"
+                      readOnly={!isEditingProfile}
+                      className={`w-full pl-11 pr-4 py-3 border rounded-xl text-brand-text-primary placeholder:text-brand-text-muted focus:outline-none focus:ring-2 transition-all text-sm ${
+                        !isEditingProfile 
+                          ? "bg-brand-bg/30 border-transparent cursor-default" 
+                          : profileForm.formState.errors.name
+                            ? "bg-brand-bg/50 border-red-500/50 focus:border-red-500 focus:ring-red-500/20"
+                            : "bg-brand-bg/50 border-brand-border hover:border-brand-text-muted focus:border-brand-cyan/60 focus:ring-brand-cyan-glow/20"
                       }`}
                       placeholder="Your full name"
                     />
@@ -387,14 +394,42 @@ export default function ProfilePage() {
                   <FeedbackBadge type={profileStatus.type} message={profileStatus.msg} />
                 )}
 
-                <button
-                  type="submit"
-                  disabled={profileSaving}
-                  className="self-start flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-brand-indigo to-brand-cyan text-brand-bg hover:brightness-110 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200 shadow-lg shadow-brand-indigo-glow/20 cursor-pointer"
-                >
-                  <Save className="size-4" />
-                  {profileSaving ? "Saving…" : "Save Changes"}
-                </button>
+                <div className="flex items-center gap-3 mt-2">
+                  {!isEditingProfile ? (
+                    <button
+                      type="button"
+                      onClick={() => setIsEditingProfile(true)}
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm bg-brand-panel border border-brand-border hover:border-brand-text-muted text-brand-text-primary transition-all duration-200 cursor-pointer"
+                    >
+                      <Edit2 className="size-4" />
+                      Edit Profile
+                    </button>
+                  ) : (
+                    <>
+                      <button
+                        type="submit"
+                        disabled={profileSaving}
+                        className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-brand-indigo to-brand-cyan text-brand-bg hover:brightness-110 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none transition-all duration-200 shadow-lg shadow-brand-indigo-glow/20 cursor-pointer"
+                      >
+                        <Save className="size-4" />
+                        {profileSaving ? "Saving…" : "Save Changes"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsEditingProfile(false);
+                          profileForm.reset({ name: user.name });
+                          setProfileStatus(null);
+                        }}
+                        disabled={profileSaving}
+                        className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm border border-brand-border hover:bg-white/5 text-brand-text-secondary transition-all duration-200 cursor-pointer disabled:opacity-50"
+                      >
+                        <X className="size-4" />
+                        Cancel
+                      </button>
+                    </>
+                  )}
+                </div>
               </form>
             </section>
 
