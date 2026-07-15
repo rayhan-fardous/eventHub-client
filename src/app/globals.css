@@ -1,2 +1,91 @@
 @import "tailwindcss";
 @import "@heroui/styles";
+
+@source "../**/*.{js,ts,jsx,tsx,mdx}";
+@source "../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
+@source "../../node_modules/@heroui/react/dist/**/*.{js,ts,jsx,tsx}";
+
+@theme {
+  --color-brand-bg: #030712;
+  --color-brand-panel: #0b0f19;
+  --color-brand-border: #1e293b;
+  
+  --color-brand-indigo: #6366f1;
+  --color-brand-indigo-hover: #4f46e5;
+  --color-brand-indigo-glow: rgba(99, 102, 241, 0.15);
+  
+  --color-brand-cyan: #06b6d4;
+  --color-brand-cyan-hover: #0891b2;
+  --color-brand-cyan-glow: rgba(6, 182, 212, 0.15);
+
+  --color-brand-text-primary: #f8fafc;
+  --color-brand-text-secondary: #94a3b8;
+  --color-brand-text-muted: #64748b;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Global resets for our immersive dark theme */
+html, body {
+  background-color: #030712;
+  color: #f8fafc;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(11, 15, 25, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.1);
+}
+
+/* Glowing text & shadow effects */
+.text-glow-indigo {
+  text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+}
+
+/* Custom linear gradient animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
