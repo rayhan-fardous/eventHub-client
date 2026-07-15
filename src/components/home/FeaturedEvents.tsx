@@ -1,13 +1,30 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Award } from 'lucide-react';
-import { mockEvents } from '@/lib/mockEvents';
+import { Event } from '@/lib/mockEvents';
+import { fetchEvents } from '@/lib/api';
 import EventCard from '@/components/cards/EventCard';
+import EventSkeleton from '@/components/cards/EventSkeleton';
 
 export default function FeaturedEvents() {
-  // Filter events with rating >= 4.8
-  const featured = mockEvents.filter((event) => event.rating >= 4.8).slice(0, 3);
+  const [featured, setFeatured] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchEvents()
+      .then((data) => {
+        const filtered = data.filter((event) => event.rating >= 4.8).slice(0, 3);
+        setFeatured(filtered);
+      })
+      .catch((err) => {
+        console.error("Failed to load featured events:", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <section className="py-20 bg-brand-bg relative">
@@ -29,9 +46,9 @@ export default function FeaturedEvents() {
 
         {/* Featured Events Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featured.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
+          {loading
+            ? Array.from({ length: 3 }).map((_, i) => <EventSkeleton key={i} />)
+            : featured.map((event) => <EventCard key={event.id} event={event} />)}
         </div>
 
       </div>

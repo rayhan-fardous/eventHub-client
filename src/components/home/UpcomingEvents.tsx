@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CalendarRange, ArrowRight } from 'lucide-react';
-import { mockEvents, Event } from '@/lib/mockEvents';
+import { Event } from '@/lib/mockEvents';
+import { fetchEvents } from '@/lib/api';
 import EventCard from '@/components/cards/EventCard';
 import EventSkeleton from '@/components/cards/EventSkeleton';
 
@@ -12,15 +13,18 @@ export default function UpcomingEvents() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading state to show Skeleton Loader
-    const timer = setTimeout(() => {
-      // Sort events by date ascending
-      const sorted = [...mockEvents].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-      setEvents(sorted.slice(0, 3));
-      setLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
+    setLoading(true);
+    fetchEvents()
+      .then((data) => {
+        const sorted = [...data].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        setEvents(sorted.slice(0, 3));
+      })
+      .catch((err) => {
+        console.error("Failed to load upcoming events:", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   return (

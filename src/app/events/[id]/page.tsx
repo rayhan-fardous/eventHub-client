@@ -20,22 +20,26 @@ import {
   Sparkles,
   CheckCircle2
 } from 'lucide-react';
-import { mockEvents, Event, Review } from '@/lib/mockEvents';
+import { Event, Review } from '@/lib/mockEvents';
 import EventCard from '@/components/cards/EventCard';
 import Footer from '@/components/Footer';
+import { useAuth } from '@/context/AuthContext';
+import { fetchEventById, bookEvent, addEventReview, fetchUserBookings, fetchEvents } from '@/lib/api';
 
 export default function EventDetailsPage() {
   const { id } = useParams();
   const router = useRouter();
+  const { user } = useAuth();
 
-  // Find the event
-  const currentEvent = mockEvents.find((e) => e.id === id);
-
-  // States for interactive logic
+  // Component states
+  const [currentEvent, setCurrentEvent] = useState<Event | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [bookingLoading, setBookingLoading] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
   const [isRegistered, setIsRegistered] = useState(false);
   const [seatsLeft, setSeatsLeft] = useState(0);
   const [reviewsList, setReviewsList] = useState<Review[]>([]);
+  const [relatedEvents, setRelatedEvents] = useState<Event[]>([]);
   
   // Review form states
   const [newRating, setNewRating] = useState(5);
@@ -44,17 +48,61 @@ export default function EventDetailsPage() {
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
   useEffect(() => {
-    if (currentEvent) {
-      setSeatsLeft(currentEvent.seats.total - currentEvent.seats.booked);
-      setReviewsList(currentEvent.reviews);
-      setIsRegistered(false);
-      setReviewSubmitted(false);
-      setNewComment('');
-      setNewName('');
-      setNewRating(5);
-      setActiveImage(0);
-    }
-  }, [id, currentEvent]);
+    if (!id) return;
+
+    setLoading(true);
+    fetchEventById(id as string)
+      .then((event) => {
+        setCurrentEvent(event);
+        setSeatsLeft(event.seats.total - event.seats.booked);
+        setReviewsList(event.reviews || []);
+        setActiveImage(0);
+        
+        // Load related events
+        fetchEvents()
+          .then((allEvents) => {
+            const related = allEvents
+              .filter((e) => e.category === event.category && e.id !== event.id)
+              .slice(0, 3);
+            setRelatedEvents(related);
+          })
+          .catch((err) => console.error("Error loading related events:", err));
+
+        // Check if registered
+        if (user) {
+          fetchUserBookings(user.email)
+            .then((bookings) => {
+              const registered = bookings.some(b => b.eventId === event.id);
+              setIsRegistered(registered);
+            })
+            .catch((err) => console.error("Error checking bookings:", err));
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching event details:", err);
+        setCurrentEvent(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+    setReviewSubmitted(false);
+    setNewComment('');
+    setNewName(user?.name || '');
+    setNewRating(5);
+  }, [id, user]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-brand-bg text-brand-text-primary flex flex-col justify-between">
+        <div className="flex-grow flex flex-col items-center justify-center p-8 text-center">
+          <div className="size-12 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin mb-4" />
+          <h2 className="text-xl font-bold">Loading Event Details...</h2>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!currentEvent) {
     return (
@@ -74,35 +122,55 @@ export default function EventDetailsPage() {
     );
   }
 
-  // Related events
-  const relatedEvents = mockEvents
-    .filter((e) => e.category === currentEvent.category && e.id !== currentEvent.id)
-    .slice(0, 3);
-
   // Registration handler
-  const handleRegister = () => {
-    if (seatsLeft > 0 && !isRegistered) {
-      setIsRegistered(true);
-      setSeatsLeft((prev) => prev - 1);
+  const handleRegister = async () => {
+    if (!user) {
+      router.push('/login');
+      return;
+    }
+    if (seatsLeft > 0 && !isRegistered && currentEvent) {
+      setBookingLoading(true);
+      try {
+        const response = await bookEvent(currentEvent.id, {
+          userId: user.id,
+          userEmail: user.email,
+          userName: user.name,
+        });
+        setIsRegistered(true);
+        setSeatsLeft(response.event.seats.total - response.event.seats.booked);
+      } catch (err: any) {
+        alert(err.message || "Failed to book event");
+      } finally {
+        setBookingLoading(false);
+      }
     }
   };
 
   // Submit review handler
-  const handleAddReview = (e: React.FormEvent) => {
+  const handleAddReview = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (newName.trim() && newComment.trim()) {
-      const added: Review = {
-        id: `rev-added-${Date.now()}`,
-        userName: newName,
-        rating: newRating,
-        comment: newComment,
-        date: new Date().toISOString().split('T')[0]
-      };
-      setReviewsList((prev) => [added, ...prev]);
-      setReviewSubmitted(true);
-      setNewComment('');
-      setNewName('');
-      setNewRating(5);
+    if (newName.trim() && newComment.trim() && currentEvent) {
+      try {
+        const response = await addEventReview(currentEvent.id, {
+          userName: newName,
+          rating: newRating,
+          comment: newComment,
+        });
+        setReviewsList(response.reviews);
+        setReviewSubmitted(true);
+        setNewComment('');
+        setNewName(user?.name || '');
+        setNewRating(5);
+        
+        // Update current event rating as well
+        setCurrentEvent({
+          ...currentEvent,
+          rating: response.rating,
+          reviews: response.reviews
+        });
+      } catch (err: any) {
+        alert(err.message || "Failed to submit review");
+      }
     }
   };
 
@@ -449,9 +517,10 @@ export default function EventDetailsPage() {
               ) : (
                 <button
                   onClick={handleRegister}
-                  className="w-full py-4 rounded-xl font-bold bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 active:scale-[0.98] transition-all duration-200 text-brand-bg shadow-lg shadow-brand-indigo-glow/20 text-center text-sm cursor-pointer"
+                  disabled={bookingLoading}
+                  className="w-full py-4 rounded-xl font-bold bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 active:scale-[0.98] transition-all duration-200 text-brand-bg shadow-lg shadow-brand-indigo-glow/20 text-center text-sm cursor-pointer disabled:opacity-50"
                 >
-                  {isFree ? 'Register For Free' : 'Secure Ticket (Proceed)'}
+                  {bookingLoading ? 'Processing Booking...' : (isFree ? 'Register For Free' : 'Secure Ticket (Proceed)')}
                 </button>
               )}
 

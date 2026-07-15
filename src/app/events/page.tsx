@@ -3,7 +3,8 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Search, MapPin, Tag, ArrowUpDown, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
-import { mockEvents, Event } from '@/lib/mockEvents';
+import { Event } from '@/lib/mockEvents';
+import { fetchEvents } from '@/lib/api';
 import EventCard from '@/components/cards/EventCard';
 import EventSkeleton from '@/components/cards/EventSkeleton';
 import Footer from '@/components/Footer';
@@ -21,14 +22,30 @@ function EventsContent() {
   const initialLocation = searchParams.get('location') || 'All';
 
   // Component states
+  const [events, setEvents] = useState<Event[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [category, setCategory] = useState(initialCategory);
   const [location, setLocation] = useState(initialLocation);
   const [sortBy, setSortBy] = useState<'newest' | 'price' | 'rating'>('newest');
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const ITEMS_PER_PAGE = 4;
+
+  // Load events from backend
+  useEffect(() => {
+    setLoading(true);
+    fetchEvents()
+      .then((data) => {
+        setEvents(data);
+      })
+      .catch((err) => {
+        console.error("Failed to load events from backend:", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   // Reset page when filters change
   useEffect(() => {
@@ -42,7 +59,7 @@ function EventsContent() {
   }, [searchParams]);
 
   // Filter and sort events
-  const filteredEvents = mockEvents.filter((event) => {
+  const filteredEvents = events.filter((event) => {
     const matchesSearch =
       event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       event.shortDescription.toLowerCase().includes(searchQuery.toLowerCase());
@@ -195,9 +212,11 @@ function EventsContent() {
             <>
               {/* Event Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
-                {paginatedEvents.map((event) => (
-                  <EventCard key={event.id} event={event} />
-                ))}
+                {loading
+                  ? Array.from({ length: 4 }).map((_, i) => <EventSkeleton key={i} />)
+                  : paginatedEvents.map((event) => (
+                      <EventCard key={event.id} event={event} />
+                    ))}
               </div>
 
               {/* Pagination Section */}
