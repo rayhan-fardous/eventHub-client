@@ -18,6 +18,7 @@ interface AuthContextValue {
   signup: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
+  updateUser: (name: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -89,8 +90,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const clearError = useCallback(() => setError(null), []);
 
+  const updateUser = useCallback(async (name: string) => {
+    const { error: authError } = await authClient.updateUser({ name });
+    if (authError) {
+      throw new Error(authError.message || authError.code || "Update failed");
+    }
+    setUser((prev) => (prev ? { ...prev, name } : prev));
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, loading, error, login, signup, logout, clearError }}>
+    <AuthContext.Provider value={{ user, loading, error, login, signup, logout, clearError, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
