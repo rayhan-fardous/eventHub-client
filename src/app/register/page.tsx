@@ -4,9 +4,9 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import AuthLayout from "@/components/auth/AuthLayout";
-import LoginForm from "@/components/auth/LoginForm";
+import RegisterForm from "@/components/auth/RegisterForm";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
@@ -21,10 +21,10 @@ export default function LoginPage() {
 
   return (
     <AuthLayout
-      title="Welcome Back"
-      description="Sign in to access your EventHub account"
+      title="Create Account"
+      description="Join EventHub today to manage dynamic events"
     >
-      <LoginForm />
+      <RegisterForm />
     </AuthLayout>
   );
 }

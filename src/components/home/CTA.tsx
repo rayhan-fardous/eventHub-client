@@ -25,7 +25,7 @@ export default function CTA() {
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto shrink-0 z-10">
           <Link
-            href="/signup"
+            href="/register"
             className="text-center px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-brand-text-primary text-brand-bg font-bold hover:bg-brand-text-secondary active:scale-[0.98] transition-all duration-200 text-sm sm:text-base"
           >
             Create Account

@@ -79,7 +79,7 @@ export default function Navbar() {
         Login
       </Link>
       <Link
-        href="/signup"
+        href="/register"
         className="text-sm font-medium text-brand-bg bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 active:scale-[0.98] transition-all duration-200 px-4 py-2 rounded-xl shadow-lg shadow-brand-indigo-glow/20"
       >
         Register
@@ -105,7 +105,7 @@ export default function Navbar() {
         Login
       </Link>
       <Link
-        href="/signup"
+        href="/register"
         onClick={closeMenu}
         className="text-center text-sm font-semibold text-brand-bg bg-gradient-to-r from-brand-indigo to-brand-cyan hover:brightness-110 py-3 px-4 rounded-xl shadow-md transition-colors"
       >
